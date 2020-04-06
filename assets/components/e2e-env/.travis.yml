@@ -47,7 +47,9 @@ jobs:
     include:
         - name: E2E Tests
           script:
-            - npm explore @woocommerce/e2e-env -- npm run docker:up
-            - composer install
-            - npm run build
-            - npm explore @woocommerce/e2e-env -- npm run test:e2e
+	      - composer require wp-cli/i18n-command
+	      - npm run build
+	      - npm explore @woocommerce/e2e-env -- npm run docker:up
+	      - bash tests/bin/run-e2e-CI.sh
+	    after_script:
+	      - npm explore @woocommerce/e2e-env -- npm run docker:down
